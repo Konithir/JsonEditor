@@ -1,0 +1,59 @@
+﻿<Window x:Class="ZbigniewJson.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ZbigniewJson"
+        mc:Ignorable="d"
+        Title="ZbigniewJson" Height="800" Width="800">
+    <Window.Resources>
+        <SolidColorBrush x:Key="TextBackGround" Color="#FFA2A2A2"/>
+    </Window.Resources>
+    <Window.CommandBindings>
+        <CommandBinding Command="ApplicationCommands.New" Executed="MenuItem_Click_New" />
+        <CommandBinding Command="ApplicationCommands.Open" Executed="MenuItem_Click_Open" />
+        <CommandBinding Command="ApplicationCommands.Save" Executed="MenuItem_Click_Save" />
+        <CommandBinding Command="ApplicationCommands.SaveAs" Executed="MenuItem_Click_SaveAs" />
+        <CommandBinding Command="ApplicationCommands.Undo" Executed="MenuItem_Click_Undo" />
+        <CommandBinding Command="ApplicationCommands.Redo" Executed="MenuItem_Click_Redo" />
+    </Window.CommandBindings>
+    <Grid>
+        <Menu Height="30" VerticalAlignment="Top">
+            <MenuItem Header="{Binding Path=File}" DataContext="{DynamicResource ApplicationStringResources}">
+                <MenuItem Header="{Binding Path=New}" DataContext="{DynamicResource ApplicationStringResources}" Command="ApplicationCommands.New" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="{Binding Path=Open}" DataContext="{DynamicResource ApplicationStringResources}" Command="ApplicationCommands.Open" InputGestureText="Ctrl+O"/>
+                <MenuItem Header="{Binding Path=Save}" DataContext="{DynamicResource ApplicationStringResources}" Command="ApplicationCommands.Save"  InputGestureText="Ctrl+S"/>
+                <MenuItem Header="{Binding Path=SaveAs}" DataContext="{DynamicResource ApplicationStringResources}" Command="ApplicationCommands.SaveAs"  InputGestureText="Ctrl+Alt+S"/>
+                <MenuItem Header="{Binding Path=Exit}" DataContext="{DynamicResource ApplicationStringResources}"  InputGestureText="Alt+F4" Click="MenuItem_Click_Exit"/>
+            </MenuItem>
+            <MenuItem Header="{Binding Edit, Source={StaticResource ResourceKey=ApplicationStringResources}}">
+                <MenuItem Header="{Binding Path=Undo}" DataContext="{DynamicResource ApplicationStringResources}" Command="ApplicationCommands.Undo" InputGestureText="Alt+Z"/>
+                <MenuItem Header="{Binding Path=Redo}" DataContext="{DynamicResource ApplicationStringResources}" Command="ApplicationCommands.Redo" InputGestureText="Alt+Y"/>
+            </MenuItem>
+            <MenuItem Header="{Binding Path=Export}" DataContext="{DynamicResource ApplicationStringResources}" >
+                <MenuItem Header="{Binding Path=ToExcel}" DataContext="{DynamicResource ApplicationStringResources}" Click="MenuItem_Click_ToExcel" />
+            </MenuItem>
+            <MenuItem Header="{Binding Path=Options}" DataContext="{DynamicResource ApplicationStringResources}" >
+                <MenuItem Header="{Binding Path=Language}" DataContext="{DynamicResource ApplicationStringResources}" >
+                    <MenuItem Header="Polski" Click="MenuItem_Click_Polish"/>
+                    <MenuItem Header="English" Click="MenuItem_Click_English"/>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        <TabControl>
+            <TabControl.Resources>
+                <Style TargetType="TabPanel">
+                    <Setter Property="HorizontalAlignment" Value="Right"/>
+                </Style>
+            </TabControl.Resources>
+            <TabItem Header="Raw" MouseLeftButtonUp="Button_Click_Raw">
+                <TextBox x:Name="MainTextBlock" Margin="1,25,1,1" TextWrapping="Wrap" Text="" Background="{DynamicResource TextBackGround}" VerticalScrollBarVisibility="Visible" AcceptsReturn="True" TextChanged="MainTextBlock_TextChanged"/>
+            </TabItem>
+            <TabItem Header="Managed" MouseLeftButtonUp="Button_Click_Managed">
+                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                    <WrapPanel x:Name="ManagedParent"  Margin="1,25,1,1" Background="{DynamicResource TextBackGround}"/>
+                </ScrollViewer>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
